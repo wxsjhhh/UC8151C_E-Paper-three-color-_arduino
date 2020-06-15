@@ -1,4 +1,4 @@
-# UC8151C_E-ink-three-color-_arduino
+# UC8151C_E-Paper-three-color-_arduino
 UC8151C主控三色墨水屏arduino驱动程序
 
 epdif.h
