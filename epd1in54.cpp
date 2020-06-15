@@ -90,7 +90,7 @@ void Epd::Reset(void) {
 /**
  *  @brief: transmit partial data to the  of SRAM
  */
-void Epd::SetPartialWindow(const unsigned char* buffer_red, int x, int y, int w, int l) {
+void Epd::SetPartialWindow(const unsigned char* buffer_red, int x, int y, int w, int l,int color) {
     SendCommand(PARTIAL_IN);
     SendCommand(PARTIAL_WINDOW);
     SendData(x & 0xf8);     // x should be the multiple of 8, the last 3 bit will always be ignored
@@ -101,14 +101,17 @@ void Epd::SetPartialWindow(const unsigned char* buffer_red, int x, int y, int w,
     SendData((y + l - 1) & 0xff);
     SendData(0x01);         // Gates scan both inside and outside of the partial window. (default)
     DelayMs(2);
-    SendCommand(DATA_START_TRANSMISSION_2);
+    if (color == 1){
+    SendCommand(DATA_START_TRANSMISSION_1);}
+    else{
+    SendCommand(DATA_START_TRANSMISSION_2);}
     if (buffer_red != NULL) {
         for(int i = 0; i < w  / 8 * l; i++) {
             SendData(buffer_red[i]);  
         }  
     } else {
         for(int i = 0; i < w  / 8 * l; i++) {
-            SendData(0x00);
+            SendData(0xFF);
         }  
     }
     DelayMs(2);
@@ -152,14 +155,6 @@ void Epd::DisplayFrame(const unsigned char* frame_buffer_black,const unsigned ch
         }
         DelayMs(2);
     }
-    else{
-      SendCommand(DATA_START_TRANSMISSION_1);
-        DelayMs(2);
-        for (int i = 0; i < this->width * this->height / 8; i++) {
-            SendData(0XFF);
-        }
-        DelayMs(2);
-      }
     if (frame_buffer_red  != NULL) {
         SendCommand(DATA_START_TRANSMISSION_2);
         DelayMs(2);
@@ -168,14 +163,6 @@ void Epd::DisplayFrame(const unsigned char* frame_buffer_black,const unsigned ch
         }
         DelayMs(2);
     }
-    else{
-      SendCommand(DATA_START_TRANSMISSION_2);
-        DelayMs(2);
-        for (int i = 0; i < this->width * this->height / 8; i++) {
-            SendData(0XFF);
-        }
-        DelayMs(2);
-      }
     SendCommand(DISPLAY_REFRESH);
     WaitUntilIdle();
 }

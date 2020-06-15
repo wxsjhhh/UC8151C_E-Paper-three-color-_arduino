@@ -9,6 +9,9 @@
 #define CS_PIN          26
 #define BUSY_PIN        27
 
+#define SDA_PIN         12
+#define SCK_PIN         13
+
 class EpdIf {
 public:
     EpdIf(void);

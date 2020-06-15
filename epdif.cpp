@@ -31,6 +31,6 @@ int EpdIf::IfInit(void) {
     pinMode(DC_PIN, OUTPUT);
     pinMode(BUSY_PIN, INPUT); 
     SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
-    SPI.begin();
+    SPI.begin(SCK_PIN,-1,SDA_PIN,-1);//(int8_t sck, int8_t miso, int8_t mosi, int8_t ss)
     return 0;
 }

@@ -66,7 +66,7 @@ public:
     void SetLutBw(void);
     void SetLutRed(void);
     void DisplayFrame(const unsigned char* frame_buffer_black,const unsigned char* frame_buffer_red);
-    void SetPartialWindow(const unsigned char* buffer_red, int x, int y, int w, int l);
+    void SetPartialWindow(const unsigned char* buffer_red, int x, int y, int w, int l,int color);
     void DisplayFrame(void);
     void ClearFrame(void);
     void Sleep(void);
